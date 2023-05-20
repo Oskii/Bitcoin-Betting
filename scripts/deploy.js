@@ -29,6 +29,11 @@ async function main() {
   await bettingContract.deployed();
   console.log("📝 BettingContract deployed to:", bettingContract.address);
 
+  // Oracle sets new random BTC price
+  var newPrice = Math.floor(Math.random() * (75000 - 25000 + 1)) + 25000; // Random price between 25k and 75k
+  await bettingContract.connect(oracle).setPrice(newPrice * 10**6); // Setting new random BTC price
+  console.log(`₿ Oracle has set the new BTC price to ${newPrice} USDC`);
+
   const mintAmount = 100000;
   
   // Mint USDC for bettorA and bettorB
@@ -56,7 +61,7 @@ async function main() {
   await waitForBlockTimestamp(closingTime);
 
   // Oracle sets new random BTC price
-  const newPrice = Math.floor(Math.random() * (75000 - 25000 + 1)) + 25000; // Random price between 25k and 75k
+  newPrice = Math.floor(Math.random() * (75000 - 25000 + 1)) + 25000; // Random price between 25k and 75k
   await bettingContract.connect(oracle).setPrice(newPrice * 10**6); // Setting new random BTC price
   console.log(`₿ Oracle has set the new BTC price to ${newPrice} USDC`);
 
